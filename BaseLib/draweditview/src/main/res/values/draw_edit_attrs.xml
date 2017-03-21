@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="boundsAttrs">
+        <attr name="topHeight" format="dimension|reference"/>
+        <attr name="topWidth"  format="dimension|reference"/>
+        <attr name="topLeftPadding" format="dimension|reference"/>
+
+
+        <attr name="buttonHeight" format="dimension|reference"/>
+        <attr name="buttonWidth" format="dimension|reference"/>
+
+        <attr name="leftWidth" format="dimension|reference"/>
+        <attr name="leftHeight" format="dimension|reference"/>
+        <attr name="LeftPadding" format="dimension|reference"/>
+
+        <attr name="rightWidth" format="dimension|reference"/>
+        <attr name="rightHeight" format="dimension|reference"/>
+        <attr name="rightPadding" format="dimension|reference"/>
+
+        <attr name="bottomWidth" format="dimension|reference"/>
+        <attr name="bottomHeight" format="dimension|reference"/>
+        <attr name="bottomLeftPadding" format="dimension|reference"/>
+
+    </declare-styleable>
+
+
+</resources>

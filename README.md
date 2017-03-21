@@ -2,6 +2,11 @@
 在xml文件中，动态的设置TextView  EditView  Button等的  CompoundDrawables的 大小，
 ，方便调试
  
+ 
+先来看下效果
+![mahua](drawset.gif)
+ 
+ 
 ##接入方法
 
 ####在你项目的 build.gradle 文件里添加如下配置 

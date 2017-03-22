@@ -62,6 +62,13 @@ dependencies {
         
 
 ```
+####框架只提供了一下类
+DrawSetButton
+DrawSetEditText
+DrawSetRadioButton
+DrawSetTextView
+
+
 ####如果要在自己自定义的控件里面也想拥有该功能的话直接在控件里面加入下面的代码
 （ps：但是只能在支持drawableTop,drawableBottom,drawableRight,drawableLeft等的控件中）
 
@@ -82,7 +89,7 @@ dependencies {
 	}
  
  ```
-<font color=red size=5 face=“黑体”>注意：自定义的控件中只有build之后，才能生效</font>
+<font color=red size=5 face=“黑体”>注意：只有build之后，才能生效</font>
  
  
  

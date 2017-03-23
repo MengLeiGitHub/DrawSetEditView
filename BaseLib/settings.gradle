@@ -1,1 +1,1 @@
-include ':app', ':draweditview'
+include ':app', ':draweditview', ':qqgroupdemo'

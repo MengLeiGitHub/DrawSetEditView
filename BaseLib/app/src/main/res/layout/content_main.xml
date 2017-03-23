@@ -14,31 +14,20 @@
     tools:context="com.ml.baselib.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Hello World!" />
-    <com.ml.draweditview.DrawSetButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:bottomHeight="10dp"
-        app:bottomWidth="10dp"
-        android:drawableBottom="@mipmap/ic_launcher"/>
 
     <com.ml.draweditview.DrawSetTextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#fa2"
+        android:id="@+id/qqgroup"
+        android:onClick="QQGroup"
+        android:text="QQ分组效果"
         android:drawableLeft="@mipmap/ic_launcher"
-        app:leftWidth="35dp"
-        app:leftHeight="35dp"
-        android:visibility="gone"
-        android:layout_height="wrap_content"
-        android:text="123123123213132"/>
-    <com.ml.draweditview.DrawSetEditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableBottom="@mipmap/ic_launcher"
-        app:bottomHeight="30dp"
-        app:bottomWidth="30dp"
-        android:text="123123123"/>
+        app:leftHeight="10dp"
+        app:leftWidth="10dp"/>
+
+
+
+
 </LinearLayout>

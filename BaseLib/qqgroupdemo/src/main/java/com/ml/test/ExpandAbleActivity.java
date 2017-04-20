@@ -2,8 +2,10 @@ package com.ml.test;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ml.expandable.ExpandableAdapter;
@@ -12,6 +14,8 @@ import com.ml.expandable.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by admin on 2017-03-23.
@@ -22,10 +26,18 @@ public class ExpandAbleActivity extends Activity  implements IListView<GroupBean
     RecyclerView recyclerView;
     IQueryPrenser iQueryPrenser;
     DemoAdapter demoAdapter;
+    TextView  textView;
+    Handler handler=new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.text);
+
+
+
+
+
+        textView= (TextView) findViewById(R.id.text);
         recyclerView= (RecyclerView) findViewById(R.id.recy);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -48,6 +60,23 @@ public class ExpandAbleActivity extends Activity  implements IListView<GroupBean
         iQueryPrenser=new IQueryPrenser();
         iQueryPrenser.setGroupBeanIListView(this);
         iQueryPrenser.queryAll();
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.postAtTime(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView.setText("recycle有"+recyclerView.getChildCount()+"个view");
+                    }
+                },4000);
+            }
+        },3000);
+
+
+
+
+
 
     }
 

@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.ml.test.ExpandAbleActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-    }
 
+        findViewById(R.id.qqgroup).setOnClickListener(this);
+    }
+    @Override
+    public void onClick(View v) {
+        QQGroup(v);
+    }
     public void  QQGroup(View cv){
         Intent  intent=new Intent(this,ExpandAbleActivity.class);
         startActivity(intent);
@@ -57,4 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

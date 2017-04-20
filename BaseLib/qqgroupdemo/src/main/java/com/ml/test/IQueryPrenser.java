@@ -31,7 +31,7 @@ public class IQueryPrenser {
         };
 
         List<GroupBean> groupBeen=new ArrayList<>();
-        for (int i=0;i<5;i++){
+        for (int i=0;i<25;i++){
             GroupBean groupBean=new GroupBean();
             groupBean.setGroupName("分组"+i);
             List<UserBean> userBeanList=new ArrayList<>();

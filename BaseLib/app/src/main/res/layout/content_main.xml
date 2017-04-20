@@ -21,7 +21,6 @@
         android:gravity="center"
         android:background="#fa2"
         android:id="@+id/qqgroup"
-        android:onClick="QQGroup"
         android:text="QQ分组效果"
         android:drawableLeft="@mipmap/ic_launcher"
         app:leftHeight="10dp"

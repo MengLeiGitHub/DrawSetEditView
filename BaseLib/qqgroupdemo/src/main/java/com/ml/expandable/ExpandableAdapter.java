@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 
 public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpandableRecyleViewBaseAdapter.ViewHolder,Child,ChildViewHolder extends AppExpandableRecyleViewBaseAdapter.ViewHolder> extends AppExpandableRecyleViewBaseAdapter<Group,GroupViewHolder> {
 
-
+    Set<Integer>  visableOrGone=new HashSet<>();
     public ExpandableAdapter(Context context, ArrayList<Group> t) {
         super(context, t);
     }
@@ -70,8 +72,10 @@ public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpanda
                 }
                 if(isOpen){
                     if(donw2.getVisibility()!= View.VISIBLE){
+                        visableOrGone.add(qqGroupAdapterViewHolder.getPostion());
                         donw2.setVisibility(View.VISIBLE);
                     }else {
+                        visableOrGone.remove(qqGroupAdapterViewHolder.getPostion());
                         donw2.setVisibility(View.GONE);
                     }
                 }
@@ -86,6 +90,11 @@ public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpanda
     @Override
     protected void initChildWidget(GroupViewHolder holder, View linearLayout) {
         ViewGroup down2= (ViewGroup) ((ViewGroup) linearLayout).getChildAt(1);
+        if(!visableOrGone.contains(holder.getPostion())){
+            down2.setVisibility(View.GONE);
+        }else {
+            down2.setVisibility(View.VISIBLE);
+        }
         int count=getChildCount(holder.getPostion());
         if(count==down2.getChildCount()){
             //更新view
@@ -98,7 +107,6 @@ public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpanda
         }
         for (int i=0;i<count;i++){
             View child = LayoutInflater.from(getContext()).inflate(getChildLayout(),null);
-
             ChildViewHolder childViewHolder=getChildViewHolder(child);
             initChildViewWidget(childViewHolder,child);
             childViewHolder.setPostion(i);

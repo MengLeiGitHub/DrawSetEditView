@@ -4,7 +4,14 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
    >
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="adsada"
+        android:id="@+id/text" android:background="@android:color/darker_gray"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:gravity="center"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

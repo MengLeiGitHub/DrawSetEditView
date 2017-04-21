@@ -1,6 +1,7 @@
 package com.ml.test;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ public class DemoAdapter extends ExpandableAdapter<GroupBean,DemoAdapter.GroupVi
 
     @Override
     public GroupViewHolder getGroupViewHolder(View v) {
+        v.setBackgroundColor(Color.RED);
         return new GroupViewHolder(v);
     }
 

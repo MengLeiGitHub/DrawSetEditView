@@ -7,7 +7,14 @@
             android:screenOrientation="portrait"
 
             />
+        <activity android:name="com.ml.test.ExpandAblePlusActivity"
+            android:screenOrientation="portrait"
 
+            />
+        <activity android:name="com.ml.errt.MainActivity"
+            android:screenOrientation="portrait"
+
+            />
 
     </application>
 

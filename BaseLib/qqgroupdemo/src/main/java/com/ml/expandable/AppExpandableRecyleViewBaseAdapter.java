@@ -16,7 +16,7 @@ import java.util.List;
  * @param <T> item的实体bean
  * @param <A> item的viewholder
  */
-abstract class AppExpandableRecyleViewBaseAdapter<T, A extends AppExpandableRecyleViewBaseAdapter.ViewHolder> extends RecyclerView.Adapter<A> {
+public abstract class AppExpandableRecyleViewBaseAdapter<T, A extends AppExpandableRecyleViewBaseAdapter.ViewHolder> extends RecyclerView.Adapter<A> {
     private List<T> list;
     Context context;
     private int position = -1;
@@ -67,7 +67,6 @@ abstract class AppExpandableRecyleViewBaseAdapter<T, A extends AppExpandableRecy
         linearLayout.addView(view);
         A a = getViewHolder(linearLayout);
         initKongjian(a,linearLayout);
-
         return a;
     }
 

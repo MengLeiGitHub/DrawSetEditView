@@ -27,6 +27,17 @@
         app:leftWidth="10dp"/>
 
 
+    <com.ml.draweditview.DrawSetTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#4791b5"
+        android:layout_marginTop="50dp"
+        android:id="@+id/qqgroup_plus"
+        android:text="QQ分组效果升级版"
+        android:drawableLeft="@mipmap/ic_launcher"
+        app:leftHeight="10dp"
+        app:leftWidth="10dp"/>
 
 
 </LinearLayout>

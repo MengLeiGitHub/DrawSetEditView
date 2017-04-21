@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ml.test.ExpandAbleActivity;
+import com.ml.test.ExpandAblePlusActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,16 +32,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         findViewById(R.id.qqgroup).setOnClickListener(this);
+        findViewById(R.id.qqgroup_plus).setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
-        QQGroup(v);
+        switch (v.getId()){
+            case R.id.qqgroup:
+                QQGroup(v);
+                break;
+            case R.id.qqgroup_plus:
+                QQGroupPlus(v);
+                break;
+        }
     }
     public void  QQGroup(View cv){
         Intent  intent=new Intent(this,ExpandAbleActivity.class);
         startActivity(intent);
     }
-
+    public void  QQGroupPlus(View cv){
+        Intent  intent=new Intent(this,ExpandAblePlusActivity.class);
+        startActivity(intent);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

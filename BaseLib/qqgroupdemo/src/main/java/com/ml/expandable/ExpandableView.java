@@ -1,12 +1,9 @@
-package com.ml.expandablePlus;
+package com.ml.expandable;
 
 import android.content.Context;
-import android.graphics.Color;
-
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.ml.expandable.AppExpandableRecyleViewBaseAdapter;
 import com.ml.expandable.ExpandableAdapter;
+
 
 /**
  * Created by admin on 2017-04-21.
@@ -42,6 +40,7 @@ public class ExpandableView extends FrameLayout {
     private int mCurrentPosition = 0;
     ExpandableAdapter adapter;
     boolean isNotDO;
+    AppExpandableRecyleViewBaseAdapter.ViewHolder viewHolder;
     private void initView() {
         recyclerView = new RecyclerView(getContext());
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -54,8 +53,8 @@ public class ExpandableView extends FrameLayout {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                Log.e("newState",newState+"");
-                isNotDO=RecyclerView.SCROLL_STATE_SETTLING==newState;
+
+                isNotDO= RecyclerView.SCROLL_STATE_SETTLING==newState;
                 topHeight = topView.getMeasuredHeight();
                 setTOPView(linearLayoutManager);
             }
@@ -63,7 +62,7 @@ public class ExpandableView extends FrameLayout {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                View  nextView=linearLayoutManager.findViewByPosition(mCurrentPosition+1);
+                View nextView=linearLayoutManager.findViewByPosition(mCurrentPosition+1);
                 if(nextView==null)return;
 
 
@@ -76,11 +75,29 @@ public class ExpandableView extends FrameLayout {
                 if (mCurrentPosition != linearLayoutManager.findFirstVisibleItemPosition()) {
                     mCurrentPosition = linearLayoutManager.findFirstVisibleItemPosition();
                     topView.setY(0);
-                    AppExpandableRecyleViewBaseAdapter.ViewHolder viewHolder = adapter.getGroupViewHolder(topView);
-                    adapter.initGroupWidget(viewHolder, topView);
-                    adapter.bindGroupView(viewHolder, adapter.getGroup(mCurrentPosition));
+
 
                 }
+                {
+                    AppExpandableRecyleViewBaseAdapter.ViewHolder viewHolder = adapter.getGroupViewHolder(topView);
+                    adapter.initGroupWidget(viewHolder, topView);
+                   final ViewGroup viewGroup= (ViewGroup) linearLayoutManager.findViewByPosition(mCurrentPosition);
+                    boolean isOpen=false;
+                    if(viewGroup.getChildCount()<=1){
+
+                    }else {
+                        isOpen=viewGroup.getChildAt(1).getVisibility()==VISIBLE?true:false;
+                       /* final boolean  isOpenFlag=isOpen;
+                        topView.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                viewGroup.getChildAt(1).setVisibility(isOpenFlag?GONE:VISIBLE);
+                            }
+                        });*/
+                    }
+                    adapter.bindGroupView(viewHolder, adapter.getGroup(mCurrentPosition),isOpen);
+                }
+
                 View firstVisableView=linearLayoutManager.findViewByPosition(mCurrentPosition);
                 if(firstVisableView==null){
                     return;
@@ -90,13 +107,14 @@ public class ExpandableView extends FrameLayout {
                 int  visibility= viewGroup.getChildAt(1).getVisibility();
                 if(visibility==VISIBLE)
                 topView.setVisibility(visibility);
+
             }
         });
         addView(recyclerView);
     }
 
     private void  setTOPView(LinearLayoutManager linearLayoutManager){
-        View  nextView=linearLayoutManager.findViewByPosition(mCurrentPosition+1);
+        View nextView=linearLayoutManager.findViewByPosition(mCurrentPosition+1);
         if(nextView==null)return;
 
         if(nextView.getTop()<=topHeight){
@@ -104,6 +122,12 @@ public class ExpandableView extends FrameLayout {
         }else {
             topView.setTranslationY(0);
         }
+        View first=linearLayoutManager.findViewByPosition(mCurrentPosition);
+        if(first.getY()==0){
+            topView.setVisibility(GONE);
+        }
+
+
     }
 
 
@@ -115,14 +139,12 @@ public class ExpandableView extends FrameLayout {
         if (adapter.getItemCount() != 0) {
             AppExpandableRecyleViewBaseAdapter.ViewHolder viewHolder = adapter.getGroupViewHolder(topView);
             adapter.initGroupWidget(viewHolder, topView);
-            adapter.bindGroupView(viewHolder, adapter.getGroup(0));
-            topView.setVisibility(GONE);
-
+            adapter.bindGroupView(viewHolder, adapter.getGroup(0),false);
         }
-        topView.setBackgroundColor(Color.RED);
+        //topView.setBackgroundColor(Color.RED);
+        topView.setVisibility(GONE);
 
         ViewGroup.LayoutParams layoutParams=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         addView(topView,layoutParams);
     }
-
 }

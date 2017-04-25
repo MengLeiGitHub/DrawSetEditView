@@ -57,7 +57,7 @@ public class DemoAdapter extends ExpandableAdapter<GroupBean,DemoAdapter.GroupVi
     }
 
     @Override
-    public void bindGroupView(GroupViewHolder qqGroupAdapterViewHolder, GroupBean groupBean) {
+    public void bindGroupView(GroupViewHolder qqGroupAdapterViewHolder, GroupBean groupBean,boolean isOPen) {
         qqGroupAdapterViewHolder.groupName.setText(groupBean.getGroupName());
     }
 

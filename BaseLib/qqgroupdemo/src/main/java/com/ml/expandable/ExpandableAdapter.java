@@ -1,14 +1,19 @@
 package com.ml.expandable;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.LinearLayout;
 
+
+
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  *
@@ -20,7 +25,8 @@ import java.util.Set;
 
 public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpandableRecyleViewBaseAdapter.ViewHolder,Child,ChildViewHolder extends AppExpandableRecyleViewBaseAdapter.ViewHolder> extends AppExpandableRecyleViewBaseAdapter<Group,GroupViewHolder> {
 
-    Set<Integer>  visableOrGone=new HashSet<>();
+    Set<Integer> visableOrGone=new LinkedHashSet<>();
+    AtomicBoolean isAnimni=new AtomicBoolean(false);
     public ExpandableAdapter(Context context, ArrayList<Group> t) {
         super(context, t);
     }
@@ -32,7 +38,12 @@ public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpanda
 
     @Override
     protected void bindView(GroupViewHolder qqGroupAdapterViewHolder, Group groupBean) {
-        bindGroupView( qqGroupAdapterViewHolder,  groupBean);
+        ViewGroup viewGroup= (ViewGroup) qqGroupAdapterViewHolder.getView();
+        boolean  isOpen=false;
+        if(viewGroup!=null&&viewGroup.getChildCount()==2){
+            isOpen=viewGroup.getChildAt(1).getVisibility()== View.VISIBLE?true:false;
+        };
+        bindGroupView( qqGroupAdapterViewHolder,  groupBean,isOpen);
     }
 
 
@@ -57,7 +68,7 @@ public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpanda
             }
         }
 
-        ViewGroup.LayoutParams layoutParams=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         final LinearLayout donw2=new LinearLayout(getContext());
         donw2.setOrientation(LinearLayout.VERTICAL);
         donw2.setLayoutParams(layoutParams);
@@ -70,16 +81,60 @@ public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpanda
                 if(expandaleItemClick!=null){
                     isOpen= expandaleItemClick.groupClick(getGroup(qqGroupAdapterViewHolder.getPostion()));
                 }
-                if(isOpen){
+
+                if(isOpen&&!isAnimni.get()){
+                    isAnimni.set(true);
                     if(donw2.getVisibility()!= View.VISIBLE){
-                        visableOrGone.add(qqGroupAdapterViewHolder.getPostion());
-                        donw2.setVisibility(View.VISIBLE);
+                        ExpandAnimation animation = new ExpandAnimation(donw2,ExpandAnimation.EXPAND);
+                        animation.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                visableOrGone.add(qqGroupAdapterViewHolder.getPostion());
+                                isAnimni.set(false);
+                                notifyDataSetChanged();
+
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
+                        donw2.startAnimation(animation);
+
+
                     }else {
-                        visableOrGone.remove(qqGroupAdapterViewHolder.getPostion());
-                        donw2.setVisibility(View.GONE);
+                        ExpandAnimation animation = new ExpandAnimation(donw2,ExpandAnimation.COLLAPSE);
+                        animation.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                visableOrGone.remove(qqGroupAdapterViewHolder.getPostion());
+                                //donw2.setVisibility(View.GONE);
+                                isAnimni.set(false);
+                                notifyDataSetChanged();
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
+                        donw2.startAnimation(animation);
+
                     }
                 }
-
             }
         });
 
@@ -90,6 +145,7 @@ public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpanda
     @Override
     protected void initChildWidget(GroupViewHolder holder, View linearLayout) {
         ViewGroup down2= (ViewGroup) ((ViewGroup) linearLayout).getChildAt(1);
+
         if(!visableOrGone.contains(holder.getPostion())){
             down2.setVisibility(View.GONE);
         }else {
@@ -119,7 +175,7 @@ public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpanda
             down2.addView(child);
         }
     }
-    private  void   setChildClick(final Child  child,View  view){
+    private  void   setChildClick(final Child  child,View view){
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +198,7 @@ public abstract class ExpandableAdapter<Group,GroupViewHolder extends AppExpanda
     public abstract int getGroupLayout();
     public abstract GroupViewHolder getGroupViewHolder(View groupview);
     public  abstract void initGroupWidget(GroupViewHolder groupViewHolder, View groupview);
-    public abstract void bindGroupView(GroupViewHolder groupViewHolder, Group groupBean);
+    public abstract void bindGroupView(GroupViewHolder groupViewHolder, Group groupBean,boolean isOpen);
 
     public abstract int  getChildLayout();
     public  abstract ChildViewHolder  getChildViewHolder(View view);

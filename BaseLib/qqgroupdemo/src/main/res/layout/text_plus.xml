@@ -12,10 +12,10 @@
         android:textColor="@android:color/white"
         android:textSize="20dp"
         android:gravity="center"/>
-    <com.ml.expandablePlus.ExpandableView
+    <com.ml.expandable.ExpandableView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recy"></com.ml.expandablePlus.ExpandableView>
+        android:id="@+id/recy"></com.ml.expandable.ExpandableView>
 
 
 </LinearLayout>

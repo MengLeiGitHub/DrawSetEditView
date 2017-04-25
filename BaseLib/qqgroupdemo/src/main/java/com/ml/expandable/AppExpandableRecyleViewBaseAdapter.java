@@ -74,6 +74,11 @@ public abstract class AppExpandableRecyleViewBaseAdapter<T, A extends AppExpanda
     public void onBindViewHolder(A holder, int position) {
          T t = list.get(position);
         holder.setPostion(position);
+        /*
+          此处为解决多个view时，view状态记录错误的
+         */
+        holder.setIsRecyclable(false);
+
         initChildWidget(holder,holder.getView());
         bindView(holder, t);
 

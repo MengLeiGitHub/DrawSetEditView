@@ -3,15 +3,13 @@ package com.ml.test;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ml.expandable.ExpandableAdapter;
 import com.ml.expandable.R;
-import com.ml.expandablePlus.ExpandableView;
+import com.ml.expandable.ExpandableView;
 
 import java.util.ArrayList;
 import java.util.List;
